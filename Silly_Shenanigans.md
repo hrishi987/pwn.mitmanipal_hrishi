@@ -23,42 +23,53 @@ The problem statement was used as the reference
 In this challenge, we'll pretend that you've broken into a victim user's machine! That user is named zardus, with a home directory of /home/zardus. You, as the hacker user, have write access to his .bashrc, and zardus has read-access to /flag. The victim is simulated by the script /challenge/victim, and you can launch this script at any time to observe the victim logging into the computer. Can you get the flag?
 ```
 
-# 2. Setting PATH
-The challenge prompted me to set a PATH variable.
+# 2. Sniffing Input
+The challenge prompted me to simulate attack
 
 ## My Solve
-**Flag:** `pwn.college{EBilB-_6KX5xICnwnmfwPcF2dxf.QX1cjM1wiN1kjNzEzW}`
+**Flag:** `pwn.college{UabyyomfrmikRAiKbhZWpMnprVk.0VNzEzNxwiN1kjNzEzW}`
 
 ```bash
-hacker@path~setting-path:~$ PATH=/challenge/more_commands/
-hacker@path~setting-path:~$ /challenge/run
-Invoking 'win'....
-Congratulations! You properly set the flag and 'win' has launched!
-pwn.college{EBilB-_6KX5xICnwnmfwPcF2dxf.QX1cjM1wiN1kjNzEzW}
+hacker@shenanigans~sniffing-input:~$ /challenge/victim
+Username: zardus
+Password: ********
+zardus@shenanigans~sniffing-input:~$ flag_checker
+Type the flag
+*************************************************************pwn.college{UabyyomfrmikRAiKbhZWpMnprVk.0VNzEzNxwiN1kjNzEzW}
+zardus@shenanigans~sniffing-input:~$ exit
+logout
+hacker@shenanigans~sniffing-input:~$
 ```
 
 ## What I learned
-I learned how to set a directory in PATH variable.
+I learned how to edit bashrc.
 
 ## References
 The problem statement was used as the reference
 ```
-Let's practice. This level's /challenge/run will run the win command via its bare name, but this command exists in the /challenge/more_commands/ directory, which is not initially in the PATH. The win command is the only thing that /challenge/run needs, so you can just overwrite PATH with that one directory. Good luck!
+Your mission is to use your continued write access to Zardus's .bashrc to intercept this flag. Remember how you hijacked commands in the Pondering PATH module? Can you use that capability to hijack the flag_checker?
 ```
 
-# 3. Finding Commands
-The challenge prompted me to use `which`.
+# 3. Overshared Directories
+The challenge prompted me to edit bashrc.
 
 ## My Solve
-**Flag:** `pwn.college{kH18tqSomQL8Gv-j1K4BDjpmivz.01NzEzNxwiN1kjNzEzW}`
+**Flag:** `pwn.college{cKYf0HaKoO8wavoP19k_Thnt1OJ.0FM0EzNxwiN1kjNzEzW}`
 
 ```bash
-hacker@path~finding-commands:~$ cat /challenge/paths/31424/flag
-pwn.college{kH18tqSomQL8Gv-j1K4BDjpmivz.01NzEzNxwiN1kjNzEzW}
+hacker@shenanigans~overshared-directories:~$ mv tmp /home/zardus/.bashrc
+hacker@shenanigans~overshared-directories:~$ /challenge/victim
+Username: zardus
+Password: *********
+zardus@shenanigans~overshared-directories:~$ flag_checker
+Type the flag
+*************************************************************pwn.college{cKYf0HaKoO8wavoP19k_Thnt1OJ.0FM0EzNxwiN1kjNzEzW}
+zardus@shenanigans~overshared-directories:~$ exit
+logout
 ```
 
 ## What I learned
-I learned how to use `win` command to list the commands directory.
+I learned how to work with bashrc.
 
 ## References
 The problem statement was used as the reference
@@ -66,51 +77,78 @@ The problem statement was used as the reference
 In this challenge, we added a win command somewhere in your $PATH, but it won't give you the flag. Instead, it's in the same directory as a flag file that we made readable by you! You must find win (with the which command), and cat the flag out of that directory!
 ```
 
-# 4. Adding Commands
-The challenge prompted me add commands to PATH
+# 4. Tricky Linking
+A custom challenge
 
 ## My Solve
-**Flag:** `pwn.college{g7bxUNjz-ojv91kRKgVvwlJn-a4.QX2cjM1wiN1kjNzEzW}`
+**Flag:** `pwn.college{YXcUQlr13nk7XUm0SvHOZOD6x7G.0VM0EzNxwiN1kjNzEzW}`
 
 ```bash
-hacker@path~adding-commands:~$ /challenge/run
-Invoking 'win'....
-pwn.college{g7bxUNjz-ojv91kRKgVvwlJn-a4.QX2cjM1wiN1kjNzEzW}
+hacker@shenanigans~tricky-linking:~$ ln -sf /home/zardus/.bashrc /tmp/collab/evil-commands.txt
+hacker@shenanigans~tricky-linking:~$ /challenge/victim
+Username: zardus
+Password: *********
+zardus@shenanigans~tricky-linking:~$ echo "cat /flag" >> /tmp/collab/evil-commands.txt
+zardus@shenanigans~tricky-linking:~$ exit
+logout
+hacker@shenanigans~tricky-linking:~$ /challenge/victim
+Username: zardus
+Password: *********
+pwn.college{YXcUQlr13nk7XUm0SvHOZOD6x7G.0VM0EzNxwiN1kjNzEzW}
+zardus@shenanigans~tricky-linking:~$ echo "cat /flag" >> /tmp/collab/evil-commands.txt
+zardus@shenanigans~tricky-linking:~$ exit
+logout
 ```
 
 ## What I learned
-I learned how to set commands to PATH
+I applied my knowleadge thru solving this challenge
 
 ## References
 The problem statement was used as the reference
 ```
-You have three options to avoid that:
-
-Figure out where the cat program is on the filesystem. It must be in a directory that lives in the PATH variable, so you can print the variable out (refer to Shell Variables to remember how!), and go through the directories in it (recall that the different entries are separated by :), find which one has cat in it, and invoke cat by its absolute path.
-Set a PATH that has the old directories plus a new entry for wherever you create win.
-Use read (again, refer to Shell Variables) to read /flag. Since read is a builtin functionality of bash, it is unaffected by PATH shenanigans.
+Recall from the previous level that, having write access to /tmp/collab, the hacker user can replace that evil-commands.txt file. Also remember from Comprehending Commands that files can link to other files. What happens if hacker replaces evil-commands.txt with a symbolic link to some sensitive file that zardus can write to? Chaos and shenanigans!
 ```
 
-# 5.  Hijacking Commands
-The challenge prompted me to put what ive learnt to use.
+# 5.  Sniffing Process Arguments
+The challenge prompted me to get leaks using psaux
 
 ## My Solve
-**Flag:** `pwn.college{shSeK5Ylp9uCT_DyuKc3GcIujRp.QX3cjM1wiN1kjNzEzW}`
+**Flag:** `pwn.college{0DkqfbjwlVgKywt_ac9VaadECmb.0FOzEzNxwiN1kjNzEzW}`
 
 ```bash
-hacker@path~hijacking-commands:~$ /challenge/run
-Trying to remove /flag...
-Found 'rm' command at /home/hacker/rm. Executing!
-pwn.college{shSeK5Ylp9uCT_DyuKc3GcIujRp.QX3cjM1wiN1kjNzEzW}
+zardus@shenanigans~sniffing-process-arguments:/home/hacker$ sudo cat /flag
+pwn.college{0DkqfbjwlVgKywt_ac9VaadECmb.0FOzEzNxwiN1kjNzEzW}
 ```
 
 ## What I learned
-I learned how to replace rm with a fake rm command.
+Learnt a bit about lookin at processes to see command leaks
 
 ## References
 The problem statement was used as the reference
 ```
-Armed with your knowledge, you can now carry out some shenanigans. This challenge is almost the same as the first challenge in this module. Again, this challenge will delete the flag using the rm command. But unlike before, it will not print anything out for you.
+That's what this challenge explores. Zardus is using an automation script, passing his account password to it as an argument. Zardus is also allowed to use sudo (and, thus, to sudo cat /flag!). Steal the password, log in to Zardus' account (recall the su command from the Untangling Users module), and get that flag!
+```
 
-How can you solve this? You know that rm is searched for in the directories listed in the PATH variable. You have experience creating the win command when the previous challenge needed it. What else can you create?
+# 5.  Snooping on Configurations
+The challenge prompted me to get API key 
+
+## My Solve
+**Flag:** `pwn.college{IMziCvrvvmBK_YQafNJnyRCXBZI.0lM0EzNxwiN1kjNzEzW}`
+
+```bash
+hacker@shenanigans~snooping-on-configurations:~$ flag_getter --key sk-71843507
+Correct API key! Do you want me to print the flag (y/n)?
+y
+pwn.college{IMziCvrvvmBK_YQafNJnyRCXBZI.0lM0EzNxwiN1kjNzEzW}
+```
+
+## What I learned
+Learnt about snooping data from bashrc
+
+## References
+The problem statement was used as the reference
+```
+Naturally, Zardus stores his key in .bashrc. Can you steal the key and get the flag?
+
+
 ```

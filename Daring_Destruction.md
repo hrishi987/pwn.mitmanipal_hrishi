@@ -1,116 +1,90 @@
-# 1. The Fork Bomb
-The challenge prompted me to edit the PATH variable. 
+# 1. Disk-Space Doomsday
+A challenge 
 
 ## My Solve
-**Flag:** `pwn.college{YWfMLaE1IqUYi9Cv_eUShFwxGsn.0VMzEzNxwiN1kjNzEzW}`
+**Flag:** `pwn.college{skSJ8Zes_v--jRx6avlcvhhYPf5.0lMyEzNxwiN1kjNzEzW}`
 
 ```bash
-hacker@shenanigans~bashrc-backdoor:~$ /challenge/victim
-Username: zardus
-Password: ***********
-pwn.college{YWfMLaE1IqUYi9Cv_eUShFwxGsn.0VMzEzNxwiN1kjNzEzW}
-zardus@shenanigans~bashrc-backdoor:~$ exit
-logout
-hacker@shenanigans~bashrc-backdoor:~$
+hacker@destruction~disk-space-doomsday:~$ /challenge/check
+Disk space restored. Here is your flag:
+pwn.college{skSJ8Zes_v--jRx6avlcvhhYPf5.0lMyEzNxwiN1kjNzEzW}
 ```
 
 ## What I learned
-I learned about the .bashrc script
+I learned about exhausting disk space using `yes`
 
 ## References
 The problem statement was used as the reference
 ```
-In this challenge, we'll pretend that you've broken into a victim user's machine! That user is named zardus, with a home directory of /home/zardus. You, as the hacker user, have write access to his .bashrc, and zardus has read-access to /flag. The victim is simulated by the script /challenge/victim, and you can launch this script at any time to observe the victim logging into the computer. Can you get the flag?
+This challenge forces you to fill the disk and then clean up. The process:
+
+Fill your disk.
+Run /challenge/check. It will attempt to create a 1 megabyte temporary file. If that fails, you pass the first stage and the checker will ask you to free the space.
+Delete the file you made (with rm) to clear up the space.
+Run /challenge/check a second time. If it can now create the temporary file (i.e., you successfully cleaned up your home directory), you’ll receive the flag.
 ```
 
-# 2. Setting PATH
-The challenge prompted me to set a PATH variable.
+# 2.rm -rf /
+Challenge to clera disk
 
 ## My Solve
-**Flag:** `pwn.college{EBilB-_6KX5xICnwnmfwPcF2dxf.QX1cjM1wiN1kjNzEzW}`
+**Flag:** `pwn.college{AjXACDwjBVIZFJPpuE4F_855BnS.0lMzEzNxwiN1kjNzEzW}`
 
 ```bash
-hacker@path~setting-path:~$ PATH=/challenge/more_commands/
-hacker@path~setting-path:~$ /challenge/run
-Invoking 'win'....
-Congratulations! You properly set the flag and 'win' has launched!
-pwn.college{EBilB-_6KX5xICnwnmfwPcF2dxf.QX1cjM1wiN1kjNzEzW}
+hacker@destruction~rm-rf-:~$ YES! You wiped it, you wild hacker! The flag is yours:
+pwn.college{AjXACDwjBVIZFJPpuE4F_855BnS.0lMzEzNxwiN1kjNzEzW}
 ```
 
 ## What I learned
-I learned how to set a directory in PATH variable.
+I learned how to launch an attack to delete sys directory
 
 ## References
 The problem statement was used as the reference
 ```
-Let's practice. This level's /challenge/run will run the win command via its bare name, but this command exists in the /challenge/more_commands/ directory, which is not initially in the PATH. The win command is the only thing that /challenge/run needs, so you can just overwrite PATH with that one directory. Good luck!
+In this challenge, you will do something that you might never do again: wipe the whole system. We've actually modified things a bit to keep your home directory safe (normally, it would get wiped as well!), but otherwise, all that stands before you and the flag is your willingness to wipe the drive. But before you wipe it all, make sure to start /challenge/check so that it can watch the fireworks (and give you the flag)!
 ```
 
-# 3. Finding Commands
-The challenge prompted me to use `which`.
+# 3. Life after rm -rf /
+Challenge
 
 ## My Solve
-**Flag:** `pwn.college{kH18tqSomQL8Gv-j1K4BDjpmivz.01NzEzNxwiN1kjNzEzW}`
+**Flag:** `pwn.college{8WO5sSZNrRjE0jQek0xitImHu0P.01MzEzNxwiN1kjNzEzW}`
 
 ```bash
-hacker@path~finding-commands:~$ cat /challenge/paths/31424/flag
-pwn.college{kH18tqSomQL8Gv-j1K4BDjpmivz.01NzEzNxwiN1kjNzEzW}
+hacker@destruction~life-after-rm-rf-:~$ YES! You did it again! Go read the flag!
+read s < /flag
+[1]+  Done                    /challenge/check
+hacker@destruction~life-after-rm-rf-:~$ echo $s
+pwn.college{8WO5sSZNrRjE0jQek0xitImHu0P.01MzEzNxwiN1kjNzEzW}
 ```
 
 ## What I learned
-I learned how to use `win` command to list the commands directory.
+Extension to previous challenge, refreshed use of read to read files
 
 ## References
 The problem statement was used as the reference
 ```
-In this challenge, we added a win command somewhere in your $PATH, but it won't give you the flag. Instead, it's in the same directory as a flag file that we made readable by you! You must find win (with the which command), and cat the flag out of that directory!
+This challenge will force you to try it. It's almost the same as the previous one, but you must read the flag yourself after you destroy the system. After you rm everything, your previously-launched /challenge/check will restore the /flag file and make it readable. Then you can read it!
 ```
 
-# 4. Adding Commands
-The challenge prompted me add commands to PATH
-
+# 4. Find meaning after rm -rf /
+Challenge
 ## My Solve
-**Flag:** `pwn.college{g7bxUNjz-ojv91kRKgVvwlJn-a4.QX2cjM1wiN1kjNzEzW}`
+**Flag:** `pwn.college{8iXtfrI3ZtYQm0K1EiHdNcva8yb.0FNzEzNxwiN1kjNzEzW}`
 
 ```bash
-hacker@path~adding-commands:~$ /challenge/run
-Invoking 'win'....
-pwn.college{g7bxUNjz-ojv91kRKgVvwlJn-a4.QX2cjM1wiN1kjNzEzW}
+hacker@destruction~finding-meaning-after-rm-rf-:~$ read var < /d0b3accc
+hacker@destruction~finding-meaning-after-rm-rf-:~$ echo $var
+pwn.college{8iXtfrI3ZtYQm0K1EiHdNcva8yb.0FNzEzNxwiN1kjNzEzW}
 ```
 
 ## What I learned
-I learned how to set commands to PATH
+More to deleting system direc
 
 ## References
 The problem statement was used as the reference
 ```
-You have three options to avoid that:
+There are a lot of ways to solve this challenge. echo is a builtin, and you can File Glob an argument to it to expand to all files! For example, echo * will print out the names of all of the files in the current directory. Similarly, you can use tab-completion (hit tab a few times) of an argument to have the shell list possible files for you.
 
-Figure out where the cat program is on the filesystem. It must be in a directory that lives in the PATH variable, so you can print the variable out (refer to Shell Variables to remember how!), and go through the directories in it (recall that the different entries are separated by :), find which one has cat in it, and invoke cat by its absolute path.
-Set a PATH that has the old directories plus a new entry for wherever you create win.
-Use read (again, refer to Shell Variables) to read /flag. Since read is a builtin functionality of bash, it is unaffected by PATH shenanigans.
-```
-
-# 5.  Hijacking Commands
-The challenge prompted me to put what ive learnt to use.
-
-## My Solve
-**Flag:** `pwn.college{shSeK5Ylp9uCT_DyuKc3GcIujRp.QX3cjM1wiN1kjNzEzW}`
-
-```bash
-hacker@path~hijacking-commands:~$ /challenge/run
-Trying to remove /flag...
-Found 'rm' command at /home/hacker/rm. Executing!
-pwn.college{shSeK5Ylp9uCT_DyuKc3GcIujRp.QX3cjM1wiN1kjNzEzW}
-```
-
-## What I learned
-I learned how to replace rm with a fake rm command.
-
-## References
-The problem statement was used as the reference
-```
-Armed with your knowledge, you can now carry out some shenanigans. This challenge is almost the same as the first challenge in this module. Again, this challenge will delete the flag using the rm command. But unlike before, it will not print anything out for you.
-
-How can you solve this? You know that rm is searched for in the directories listed in the PATH variable. You have experience creating the win command when the previous challenge needed it. What else can you create?
+Whatever route you use, find the randomly-named file that /challenge/check makes in / after you rm, read it, and get the flag!
 ```
