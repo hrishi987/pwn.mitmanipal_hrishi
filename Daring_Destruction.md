@@ -88,3 +88,31 @@ There are a lot of ways to solve this challenge. echo is a builtin, and you can 
 
 Whatever route you use, find the randomly-named file that /challenge/check makes in / after you rm, read it, and get the flag!
 ```
+
+# 4. The Fork Bomb
+Challenge
+
+## My Solve
+**Flag:** `pwn.college{QvFFhikrrC_fm4hnVswCl1cbpdm.0VMyEzNxwiN1kjNzEzW}`
+
+```bash
+You successfully saturated the process table.  Here is your hard-earned flag:
+pwn.college{QvFFhikrrC_fm4hnVswCl1cbpdm.0VMyEzNxwiN1kjNzEzW}
+```
+
+## What I learned
+Learnt how to create a fork bomb attack.
+
+## References
+The problem statement was used as the reference
+```
+You have the tools to do this:
+
+write a small script (like in the Chaining Commands module)
+make it executable (like in the Perceiving Permissions module)
+make it launch a copy of itself in the background (like in the Processes and Jobs module)
+and then launch another copy of itself in the background!
+Each copy will launch two more, and each of those will launch two more, and you will flood the system with so many processes that new ones will not be able to start!
+
+This challenge contains a /challenge/check that'll try to determine if your fork bomb is working (e.g., if it can't launch new processes) and give you the flag if so. Make sure to launch it (in a different terminal) before launching your attack; otherwise you won't be able to launch it!
+```
